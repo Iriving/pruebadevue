@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de VUE.JS</title>
+    
+    
+    <style>
+    
+    
+        .titulo1 { 
+        
+        
+            color: teal;
+            font-size: 40px;
+            text-align: center;
+            font-family: cursive;
+        
+        }
+        
+        .lista span {
+            
+            color: dodgerblue;
+            font-family: monospace;
+            font-size: 18px;
+            text-transform: uppercase;
+            list-style: none;
+            list-style-type: square;
+            
+        }
+    
+    
+    </style>
+    
+</head>
+<body>
+   
+   <div id="root"> 
+   
+    <h1 class="titulo1">{{title}}</h1>
+    <h2 class="titulo2">{{title2}}</h2>
+    
+    <input v-on:keydown.enter= "addPizza(add.value)" type="text" id="add">
+    
+    
+    <ul class="lista">
+        <li v-for="item in items">
+            <span>{{item.text}}</span>
+            
+        </li>
+    </ul>
+     
+     
+      
+        </div>
+   
+   
+   
+   
+   <!----------------------------------------------------JS-------------------------------------->
+   
+   
+<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCUXTtex7kNmVP_vGgS5pVJpwZ0Rf7oy5c",
+    authDomain: "vuejs-70b9f.firebaseapp.com",
+    databaseURL: "https://vuejs-70b9f.firebaseio.com",
+    projectId: "vuejs-70b9f",
+    storageBucket: "vuejs-70b9f.appspot.com",
+    messagingSenderId: "909638029742"
+  };
+  firebase.initializeApp(config);
+</script>
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+   
+  
+   
+   <script>
+    
+    var app = new Vue ({
+        
+        el: "#root",
+        data: {
+            
+            title: "Esta es mi nueva aplicacion en VUE.js",
+            title2: "Y me esta encantando mucho",
+            items: [
+                
+                {text: "hawaiana"},
+                {text: "peperoni"},
+                {text: "mexicana"}
+            ]
+            
+         
+            
+        },
+        
+        methods: {
+            
+            addPizza(name) {
+                var ob = {text:name};
+                this.items.unshift(ob);
+                add.value = "";
+                var updates = {pizzas:this.items};
+                firebase.database().ref().update(updates);
+                
+                
+            }
+            
+        }
+        
+        
+    });
+    
+    
+    </script>
+    
+</body>
+</html>
